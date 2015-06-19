@@ -1,0 +1,19 @@
+{
+  "name": "tacsiazuma/jackson_PHP",
+  "description": "description_text",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Papp Krisztián",
+      "email": "tacsiazuma@gmail.com"
+    }
+  ],
+  "autoload" : {
+    "psr-4" : { "Jackson\\" : "src/"}
+
+  },
+  "require": {
+    "phpunit/phpunit": "4.7.*"
+  }
+}
