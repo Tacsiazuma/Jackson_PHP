@@ -7,11 +7,39 @@
  */
 namespace Jackson;
 
+use Jackson\Elements\Char;
+
 
 class Scanner {
 
-    public function setString($string) {
+    private $sourceText;
+    private $sourceIndex = 0;
+    private $lastIndex;
 
+    public function setSourceText($text) {
+        $this->sourceText = $text;
+        $this->lastIndex = strlen ( $this->sourceText ) - 1;
     }
+
+    public function getSourceText() {
+        return $this->sourceText;
+    }
+
+    public function has() {
+        return $this->sourceIndex <= $this->lastIndex;
+    }
+
+    public function getLastIndex() {
+        return $this->lastIndex;
+    }
+
+    // the main function to get character objects from the byte array
+    public function get() {
+        $char = $this->sourceText[$this->sourceIndex];
+
+        $this->sourceIndex++;
+        return new Char($char);
+    }
+
 
 }
