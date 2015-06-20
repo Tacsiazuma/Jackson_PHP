@@ -8,12 +8,24 @@
 
 namespace Jackson;
 
+use Jackson\Elements\Token;
+
+
 class Lexer {
 
     private $scanner;
 
-    public function __construct() {
+    private $buffer;
 
+    private $starterChars = array(
+        "[", "{"
+    );
+    private $endingChars = array(
+        "}", "]"
+    );
+
+    public function __construct() {
+        $this->getChar(); // initially fill the buffer
     }
 
     public function setScanner($scanner) {
@@ -22,6 +34,14 @@ class Lexer {
 
     public function getScanner() {
         return $this->scanner;
+    }
+
+    private function getChar() {
+
+    }
+
+    public function get() {
+        return new Token("{}");
     }
 
 }

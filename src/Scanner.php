@@ -17,6 +17,7 @@ class Scanner {
     private $lastIndex;
 
     public function setSourceText($text) {
+        if (!is_string($text)) throw new \InvalidArgumentException;
         $this->sourceText = $text;
         $this->lastIndex = strlen ( $this->sourceText ) - 1;
     }

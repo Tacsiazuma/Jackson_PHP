@@ -27,6 +27,14 @@ class ScannerTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(is_object($this->scanner));
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     */
+
+    public function testScannerExceptionOnNullContent() {
+        $this->scanner->setSourceText(null);
+    }
+
     public function testScannerSetterGetter() {
         $gettext = $this->scanner->getSourceText();
         $this->assertEquals( $this->jsonString, $gettext, "The source text and the contained text not equals!");
