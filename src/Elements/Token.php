@@ -12,13 +12,32 @@ class Token {
 
     private $content, $char;
 
+    const STRING = 1;
+    const OBJ_START = 2;
+    const OBJ_END = 3;
+    const COLON = 4;
+    const COMMA = 8;
+    const ARRAY_START = 5;
+    const ARRAY_END = 6;
+    const EOF = 7;
 
-    public function __construct($content) {
-        if (!is_string($content)) throw new \InvalidArgumentException;
-        $this->content = $content;
-        $this->char = new Char($content[0]);
+    public function __construct(Char $char) {
+        $this->char = $char;
+        $this->content = $char->getContent();
     }
 
+    public function setType($type) {
+        $this->type = $type;
+    }
+
+    public function getType() {
+        return $this->type;
+    }
+
+
+    public function appendContent($char) {
+        $this->content .= $char;
+    }
 
 
     public function getContent() {

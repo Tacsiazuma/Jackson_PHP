@@ -20,6 +20,7 @@ class Scanner {
         if (!is_string($text)) throw new \InvalidArgumentException;
         $this->sourceText = $text;
         $this->lastIndex = strlen ( $this->sourceText ) - 1;
+        if ($this->sourceText[0] != "{" || $this->sourceText[$this->lastIndex] != "}" ) throw new \InvalidArgumentException;
     }
 
     public function getSourceText() {
@@ -36,10 +37,15 @@ class Scanner {
 
     // the main function to get character objects from the byte array
     public function get() {
-        $char = $this->sourceText[$this->sourceIndex];
+        if ($this->has()) {
+            $char = $this->sourceText[$this->sourceIndex];
+            $this->sourceIndex++;
+            return new Char($char, $this->sourceIndex);
+        } else {
+            $this->sourceIndex++;
+            return new Char(Char::CHAR_EOF, $this->sourceIndex);
+        }
 
-        $this->sourceIndex++;
-        return new Char($char);
     }
 
 

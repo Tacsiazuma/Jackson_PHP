@@ -13,7 +13,7 @@ class CharTest extends PHPUnit_Framework_TestCase {
     private $char;
 
     public function setUp() {
-        $this->char = new Char("{");
+        $this->char = new Char("{", 0);
     }
 
     public function testCharContainsTheRightChar() {
@@ -25,14 +25,14 @@ class CharTest extends PHPUnit_Framework_TestCase {
      * @expectedException InvalidArgumentException
      */
     public function testExceptionOnNullContent() {
-        $char = new Char(null);
+        $char = new Char(null, 0);
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
     public function testExceptionOnLongContent() {
-        $char = new Char("  ");
+        $char = new Char("  ", 0);
     }
 
 }

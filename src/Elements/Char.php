@@ -13,9 +13,12 @@ class Char {
 
     private $content;
 
-    public function __construct($content) {
+    const CHAR_EOF = "\0";
+
+    public function __construct($content, $index) {
         if (!is_string($content) || strlen($content) > 1) throw new \InvalidArgumentException;
         $this->content = $content;
+        $this->index = $index;
     }
 
 

@@ -35,6 +35,21 @@ class ScannerTest extends PHPUnit_Framework_TestCase {
         $this->scanner->setSourceText(null);
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testScannerExceptionOnMissingStartParentheses() {
+        $this->scanner->setSourceText("342423422344 }");
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testScannerExceptionOnMissingEndingParentheses() {
+        $this->scanner->setSourceText("{ 342423422344 ");
+    }
+
+
     public function testScannerSetterGetter() {
         $gettext = $this->scanner->getSourceText();
         $this->assertEquals( $this->jsonString, $gettext, "The source text and the contained text not equals!");

@@ -13,7 +13,7 @@ class LexerTest extends PHPUnit_Framework_TestCase {
 
     public function setUp() {
         $this->scanner = new Scanner();
-        $this->jsonString = json_encode(new \StdClass());
+        $this->jsonString = "{[\"öt\":\"hat\"]}";
         $this->scanner->setSourceText($this->jsonString);
         $this->lexer = new Lexer();
         $this->lexer->setScanner($this->scanner);
@@ -28,13 +28,32 @@ class LexerTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testLexerGet() {
+        $this->jsonString = "{[\"öt\":\"hat\"]}";
+        $this->scanner->setSourceText($this->jsonString);
+        $this->lexer = new Lexer();
+        $this->lexer->setScanner($this->scanner);
         $token = $this->lexer->get();
         $this->assertEquals(get_class($token), "Jackson\Elements\Token", "The lexer get method should provide a token");
-        $content = $token->getContent();
+        $this->assertEquals(\Jackson\Elements\Token::OBJ_START, $token->getType(), "The object start token missing");
+        $token = $this->lexer->get();
+        $this->assertEquals(\Jackson\Elements\Token::ARRAY_START, $token->getType(), "The array start token missing");
+        $token = $this->lexer->get();
+        $this->assertEquals(\Jackson\Elements\Token::STRING, $token->getType(), "The string token missing");
+        $this->assertEquals("öt", $token->getContent(), "The string token content isn't valid");
+        $token = $this->lexer->get();
+        $this->assertEquals(\Jackson\Elements\Token::COLON, $token->getType(), "The colon token missing");
+        $token = $this->lexer->get();
+        $this->assertEquals(\Jackson\Elements\Token::STRING, $token->getType(), "The string token missing");
+        $this->assertEquals("hat", $token->getContent(), "The string token content isn't valid");
+        $token = $this->lexer->get();
+        $this->assertEquals(\Jackson\Elements\Token::ARRAY_END, $token->getType(), "The array end token missing");
 
-        $this->assertEquals($content, "{}", "Token should contain a valid literal!");
-        $this->assertTrue($content[0] == "{" || $content[0] == "[", "Tokens should start with starting chars");
+        $token = $this->lexer->get();
+        $this->assertEquals(\Jackson\Elements\Token::OBJ_END, $token->getType(), "The object end token missing");
+        $token = $this->lexer->get();
+        $this->assertEquals(\Jackson\Elements\Token::EOF, $token->getType(), "The EOF token missing");
     }
+
 
 
 
