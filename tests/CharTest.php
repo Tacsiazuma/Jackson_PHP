@@ -20,4 +20,19 @@ class CharTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals("{", $this->char->getContent(), "The Char object isn't containing the right char");
     }
 
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testExceptionOnNullContent() {
+        $char = new Char(null);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testExceptionOnLongContent() {
+        $char = new Char("  ");
+    }
+
 }

@@ -27,4 +27,16 @@ class LexerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(get_class($this->lexer->getScanner()), "Jackson\\Scanner", "The scanner provided by the lexer's getter is not valid" );
     }
 
+    public function testLexerGet() {
+        $token = $this->lexer->get();
+        $this->assertEquals(get_class($token), "Jackson\Elements\Token", "The lexer get method should provide a token");
+        $content = $token->getContent();
+
+        $this->assertEquals($content, "{}", "Token should contain a valid literal!");
+        $this->assertTrue($content[0] == "{" || $content[0] == "[", "Tokens should start with starting chars");
+    }
+
+
+
+
 }

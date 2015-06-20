@@ -14,6 +14,7 @@ class Char {
     private $content;
 
     public function __construct($content) {
+        if (!is_string($content) || strlen($content) > 1) throw new \InvalidArgumentException;
         $this->content = $content;
     }
 
